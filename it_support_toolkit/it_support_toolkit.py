@@ -4,14 +4,18 @@ import subprocess
 
 # Function used by the "Ping Host" button
 def start_ping():
-        host = host_input.get().strip()
-        if host == "":
-            result_label.config(text="Please enter a host")
-            return
-        result = subprocess.run(["ping", "-n", "1", host], capture_output=True, text=True)
-        output.delete("1.0", "end")
-        output.insert("1.0", result.stdout)
+    host = host_input.get().strip()
+    if host == "":
+        result_label.config(text="Please enter a host")
+        return
+    result = subprocess.run(["ping", "-n", "1", host], capture_output=True, text=True)
+    output.delete("1.0", "end")
+    output.insert("1.0", result.stdout)
+    if result.returncode == 0:
         result_label.config(text="Ping completed")
+    else:
+        result_label.config(text="Ping failed")
+
 
 
 
